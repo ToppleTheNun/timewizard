@@ -3,8 +3,10 @@ module Timewizard
     class Android
       attr_accessor :dir
       attr_reader :manifest
-      attr_reader :old_version
-      attr_accessor :new_version
+      attr_reader :old_version_code
+      attr_reader :old_version_name
+      attr_accessor :new_version_code
+      attr_accessor :new_version_name
 
       def initialize(dir)
         @dir = dir
@@ -62,8 +64,8 @@ module Timewizard
         parts = container.match("android:versionCode=\"(.*)\"")
         version_code = parts[1]
 
-        @old_version = (version_code.to_i)
-        @new_version = (version_code.to_i + 1)
+        @old_version_code = (version_code.to_i)
+        @new_version_code = (version_code.to_i + 1)
 
         text = parts[0]
         text_split = text.partition(/\s/)
@@ -74,9 +76,9 @@ module Timewizard
         text = parts
         version = text.gsub(/\D/, '').to_i.to_s
         if change_to.to_s == '-1'
-          text = text.gsub(version, @new_version.to_s)
+          text = text.gsub(version, @new_version_code.to_s)
         else
-          @new_version = change_to.to_i
+          @new_version_code = change_to.to_i
           text = text.gsub(version, change_to.to_s)
         end
       end
