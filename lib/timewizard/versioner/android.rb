@@ -49,18 +49,30 @@ module Timewizard
       end
 
       def find_version_code(container)
+        codes = find_version_code_and_number(container)
+        codes[0]
+      end
+
+      def find_version_number(container)
+        codes = find_version_code_and_number(container)
+        codes[1]
+      end
+
+      def find_version_code_and_number(container)
         parts = container.match("android:versionCode=\"(.*)\"")
         version_code = parts[1]
 
         @old_version = (version_code.to_i)
         @new_version = (version_code.to_i + 1)
 
-        parts
+        text = parts[0]
+        text_split = text.partition(/\s/)
+        codes = [text_split[0], text_split[2]]
       end
 
       def change_version_code(parts, change_to = '-1')
         text = parts[0]
-        version = parts[1]
+        version = text.gsub(/\D/, '').to_i.to_s
         if change_to.to_s == '-1'
           text = text.gsub(version, @new_version.to_s)
         else
