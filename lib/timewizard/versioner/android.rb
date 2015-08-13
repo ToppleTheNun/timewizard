@@ -59,7 +59,7 @@ module Timewizard
       end
 
       def change_version_code(parts, change_to = -1)
-        if change_to >= 0
+        if change_to.to_i >= 0
           parts[0].gsub(parts[1], @changeTo.to_s)
         else
           parts[0].gsub(parts[1], @new_version.to_s)
