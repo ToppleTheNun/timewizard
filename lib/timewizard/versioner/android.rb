@@ -71,7 +71,7 @@ module Timewizard
       end
 
       def change_version_code(parts, change_to = '-1')
-        text = parts[0]
+        text = parts
         version = text.gsub(/\D/, '').to_i.to_s
         if change_to.to_s == '-1'
           text = text.gsub(version, @new_version.to_s)
@@ -82,9 +82,9 @@ module Timewizard
       end
 
       def change_manifest(container, change_to = '-1')
-        version_codes = find_version_code(container)
-        changed_codes = change_version_code(version_codes, change_to)
-        container = container.gsub(version_codes[0], changed_codes)
+        version_code = find_version_code(container)
+        changed_code = change_version_code(version_code, change_to)
+        container = container.gsub(version_code, changed_code)
       end
 
       def write_manifest(container)
