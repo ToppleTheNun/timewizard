@@ -1,6 +1,6 @@
 module Timewizard
   module Versioner
-    class AndroidVersioner
+    class Android
       attr_accessor :dir
       attr_reader :manifest
       attr_reader :old_version
