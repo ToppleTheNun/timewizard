@@ -49,16 +49,16 @@ module Timewizard
       end
 
       def find_version_code(container)
-        codes = find_version_code_and_number(container)
+        codes = find_version_code_and_name(container)
         codes[0]
       end
 
-      def find_version_number(container)
-        codes = find_version_code_and_number(container)
+      def find_version_name(container)
+        codes = find_version_code_and_name(container)
         codes[1]
       end
 
-      def find_version_code_and_number(container)
+      def find_version_code_and_name(container)
         parts = container.match("android:versionCode=\"(.*)\"")
         version_code = parts[1]
 
