@@ -52,13 +52,8 @@ module Timewizard
         parts = container.match("android:versionCode=\"(.*)\"")
         version_code = parts[1]
 
-        puts version_code
-
         @old_version = (version_code.to_i)
         @new_version = (version_code.to_i + 1)
-
-        puts "Old version " + @old_version
-        puts "New version " + @new_version
 
         parts
       end
