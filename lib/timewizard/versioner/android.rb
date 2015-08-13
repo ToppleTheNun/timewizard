@@ -1,3 +1,5 @@
+require 'timewizard/utils/wizardry'
+
 module Timewizard
   module Versioner
     class Android
@@ -74,7 +76,7 @@ module Timewizard
 
       def change_version_code(parts, change_to = '-1')
         text = parts
-        version = text.gsub(/\D/, '').to_i.to_s
+        version = Timewizard::Utils::Wizardry.to_i(text).to_s
         if change_to.to_s == '-1'
           text = text.gsub(version, @new_version_code.to_s)
         else
