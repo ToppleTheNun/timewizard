@@ -12,7 +12,7 @@ module Timewizard
         @last_version = 0
       end
 
-      def update(change_to = -1)
+      def update(change_to = '-1')
         write_manifest(change_manifest(open_manifest, change_to))
       end
 
@@ -52,13 +52,18 @@ module Timewizard
         parts = container.match("android:versionCode=\"(.*)\"")
         version_code = parts[1]
 
+        puts version_code
+
         @old_version = (version_code.to_i)
         @new_version = (version_code.to_i + 1)
+
+        puts "Old version " + @old_version
+        puts "New version " + @new_version
 
         parts
       end
 
-      def change_version_code(parts, change_to = -1)
+      def change_version_code(parts, change_to = '-1')
         if change_to.to_i >= 0
           parts[0].gsub(parts[1], @changeTo.to_s)
         else
@@ -66,7 +71,7 @@ module Timewizard
         end
       end
 
-      def change_manifest(container, change_to = -1)
+      def change_manifest(container, change_to = '-1')
         version_codes = find_version_code(container)
         changed_codes = change_version_code(version_codes, change_to)
         container = container.gsub(version_codes[0], changed_codes)
