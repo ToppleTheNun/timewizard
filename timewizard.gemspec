@@ -6,6 +6,7 @@ require 'timewizard/version'
 Gem::Specification.new do |spec|
   spec.name          = "timewizard"
   spec.version       = Timewizard::VERSION
+  spec.version = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.authors       = ["Richard Harrah"]
   spec.email         = ["topplethenunnery@gmail.com"]
 
