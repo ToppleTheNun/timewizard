@@ -13,7 +13,6 @@ module Timewizard
       def initialize(dir)
         @dir = dir
         @manifest = nil
-        @last_version = 0
       end
 
       def update(change_to = '-1')
