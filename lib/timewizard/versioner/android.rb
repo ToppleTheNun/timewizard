@@ -39,6 +39,9 @@ module Timewizard
           unless File.exist?(@dir)
             raise "file passed in does not exist"
           end
+          unless @dir == "AndroidManifest.xml"
+            raise "file must be an AndroidManifest.xml"
+          end
           temp_file = File.absolute_path(@dir)
           @manifest = temp_file
         end
