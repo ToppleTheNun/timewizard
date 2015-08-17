@@ -21,21 +21,28 @@ module Timewizard
       end
 
       def find_manifest()
-        # check if the directory exists
-        unless Dir.exist?(@dir)
-          raise "directory passed in does not exist"
+        if File.directory?(@dir)
+          # check if the directory exists
+          unless Dir.exist?(@dir)
+            raise "directory passed in does not exist"
+          end
+          temp_file = nil
+          # check if the directory contains an AndroidManifest.xml
+          Dir.foreach(@dir.to_s) { |x|
+            if x == "AndroidManifest.xml"
+              temp_file = x
+            end }
+          if temp_file.nil?
+            raise "there is no AndroidManifest.xml in the given directory"
+          end
+          @manifest = File.expand_path(temp_file, @dir)
+        else
+          unless File.exist?(@dir)
+            raise "file passed in does not exist"
+          end
+          temp_file = File.absolute_path(@dir)
+          @manifest = temp_file
         end
-        temp_file = nil
-        # check if the directory contains an AndroidManifest.xml
-        Dir.foreach(@dir.to_s) { |x|
-          if x == "AndroidManifest.xml"
-            temp_file = x
-          end }
-        if temp_file.nil?
-          raise "there is no AndroidManifest.xml in the given directory"
-        end
-
-        @manifest = File.expand_path(temp_file, @dir)
       end
 
       def open_manifest()
