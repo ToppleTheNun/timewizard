@@ -4,6 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/Nunnery/timewizard/badges/coverage.svg)](https://codeclimate.com/github/Nunnery/timewizard/coverage)
 [![Build Status](https://travis-ci.org/Nunnery/timewizard.svg?branch=master)](https://travis-ci.org/Nunnery/timewizard)
 [![Dependency Status](https://gemnasium.com/Nunnery/timewizard.svg)](https://gemnasium.com/Nunnery/timewizard)
+[![Gem Version](https://badge.fury.io/rb/timewizard.svg)](http://badge.fury.io/rb/timewizard)
 
 ## Installation
 
