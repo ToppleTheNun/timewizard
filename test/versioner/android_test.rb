@@ -3,7 +3,7 @@ require 'timewizard/versioner/android'
 
 class AndroidTest < Minitest::Test
 
-  RESOURCE_DIRECTORY = Dir.pwd.to_s + '/resources'
+  RESOURCE_DIRECTORY = Dir.pwd.to_s + '/resources/android'
 
   attr_reader :manifest
   attr_reader :versioner
