@@ -1,5 +1,4 @@
 require 'xcodeproj'
-require 'semantic'
 require 'find'
 
 module Timewizard
