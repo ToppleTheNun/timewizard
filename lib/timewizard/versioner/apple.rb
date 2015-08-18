@@ -13,6 +13,12 @@ module Timewizard
       attr_accessor :new_bundle_version
       attr_accessor :new_build_number
 
+      #
+      # Public functions
+      #
+
+      public
+
       def initialize(dir)
         @dir = dir
         @proj = nil
@@ -20,31 +26,20 @@ module Timewizard
       end
 
       def find_xcode_project()
-        if File.directory?(@dir)
-          # check if the directory exists
-          unless Dir.exist?(@dir)
-            raise "directory passed in does not exist"
-          end
-          temp_file = nil
-          # check if the directory contains a .xcodeproj
-          Dir.foreach(@dir.to_s) { |x|
-            if x.end_with?(".xcodeproj")
-              temp_file = x
-            end }
-          if temp_file.nil?
-            raise "there is no .xcodeproj in the given directory"
-          end
-          @proj = File.expand_path(temp_file, @dir)
-        else
-          unless File.exist?(@dir)
-            raise "file passed in does not exist"
-          end
-          unless @dir.end_with?(".xcodeproj")
-            raise "file must be a .xcodeproj"
-          end
-          temp_file = File.absolute_path(@dir)
-          @proj = temp_file
+        if @dir.nil?
+          raise "directory cannot be nil"
         end
+        if @dir.end_with? ".xcodeproj"
+          @proj = File.absolute_path(@dir)
+        else
+          Find.find(@dir) do |path|
+            unless path.to_s.end_with? ".xcodeproj"
+              next
+            end
+            @proj = path
+          end
+        end
+        @proj
       end
 
       def find_plists()
@@ -55,7 +50,13 @@ module Timewizard
         unless Dir.exist?(directory)
           raise "proj is not in a directory"
         end
-        @plists = Find.find(directory).select { |p| /^.*Info\.plist$/ =~ p }
+        @plists = []
+        Find.find(directory) do |p|
+          if /^.*Info\.plist$/ =~ p
+            @plists << p
+          end
+        end
+        @plists
       end
 
       def find_bundle_version(lists)
@@ -66,6 +67,12 @@ module Timewizard
         find_bundle_and_build_version(lists)[1]
       end
 
+      #
+      # Private functions
+      #
+
+      private
+
       def find_bundle_and_build_version(lists)
         versions = []
         for list in lists do
@@ -73,6 +80,7 @@ module Timewizard
           versions[0] ||= list_hash["CFBundleShortVersionString"]
           versions[1] ||= list_hash["CFBundleVersion"]
         end
+        versions
       end
 
     end
