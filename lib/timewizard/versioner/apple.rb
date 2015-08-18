@@ -69,7 +69,7 @@ module Timewizard
       def find_bundle_and_build_version(lists)
         versions = []
         for list in lists do
-          list_hash = PlistHelper.read list
+          list_hash = Xcodeproj::PlistHelper.read list
           versions[0] ||= list_hash["CFBundleShortVersionString"]
           versions[1] ||= list_hash["CFBundleVersion"]
         end
