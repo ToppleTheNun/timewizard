@@ -1,4 +1,4 @@
-require 'xcodeproj/plist_helper'
+require 'xcodeproj'
 require 'semantic'
 require 'find'
 
