@@ -1,5 +1,7 @@
 require 'xcodeproj'
 require 'find'
+require 'versionomy'
+require 'timewizard/utils/wizardry'
 
 module Timewizard
   module Versioner
@@ -11,12 +13,6 @@ module Timewizard
       attr_reader :old_build_number
       attr_accessor :new_bundle_version
       attr_accessor :new_build_number
-
-      #
-      # Public functions
-      #
-
-      public
 
       def initialize(dir)
         @dir = dir
@@ -62,15 +58,37 @@ module Timewizard
         find_bundle_and_build_version(lists)[0]
       end
 
-      def find_build_version(lists)
+      def find_build_number(lists)
         find_bundle_and_build_version(lists)[1]
       end
 
-      #
-      # Private functions
-      #
+      def change_bundle_version(versions, change_to = '-1')
+        unless change_to != '-1'
+          @new_bundle_version = versions[0]
+          versions
+        end
+        ver = Timewizard::Utils::Wizardry.only_version change_to
+        parsed = Versionomy.parse(ver, Versionomy::Format.get('rubygems'))
+        versions[0] = parsed.unparse
+        @new_bundle_version = versions[0]
+        versions
+      end
 
-      private
+      def change_build_number(versions, change_to = '-1')
+        if change_to == '-1'
+          ver = Timewizard::Utils::Wizardry.only_version @old_build_number.to_s
+          parsed = Versionomy.parse(ver, Versionomy::Format.get('rubygems'))
+          parsed = parsed.bump(parsed.parts.length - 1)
+          versions[1] = parsed.unparse
+          @new_build_number = versions[1]
+        else
+          ver = Timewizard::Utils::Wizardry.only_version change_to
+          parsed = Versionomy.parse ver
+          versions[1] = parsed.unparse
+          @new_build_number = versions[1]
+        end
+        versions
+      end
 
       def find_bundle_and_build_version(lists)
         versions = []
@@ -78,8 +96,20 @@ module Timewizard
           list_hash = Xcodeproj::PlistHelper.read list
           versions[0] ||= list_hash["CFBundleShortVersionString"]
           versions[1] ||= list_hash["CFBundleVersion"]
+
+          @old_bundle_version = versions[0]
+          @old_build_number = versions[1]
         end
         versions
+      end
+
+      def write_plists(versions)
+        for list in @plists do
+          list_hash = Xcodeproj::PlistHelper.read list
+          list_hash["CFBundleShortVersionString"] = versions[0] || list_hash["CFBundleShortVersionString"]
+          list_hash["CFBundleVersion"] = versions[0] || list_hash["CFBundleVersion"]
+          Xcodeproj::PlistHelper.write(list_hash, list)
+        end
       end
 
     end
