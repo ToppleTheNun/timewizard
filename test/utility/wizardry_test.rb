@@ -21,11 +21,11 @@ class WizardryTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_only_semver
+  def test_only_version
     stringy = 'version 0.0.1'
 
     expected = '0.0.1'
-    actual = Timewizard::Utils::Wizardry.only_semver stringy
+    actual = Timewizard::Utils::Wizardry.only_version stringy
 
     assert_equal expected, actual
   end

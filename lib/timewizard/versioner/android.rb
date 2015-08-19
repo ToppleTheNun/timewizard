@@ -80,7 +80,7 @@ module Timewizard
         @old_version_code = Timewizard::Utils::Wizardry.to_i text_split[0]
         @new_version_code = (@old_version_code + 1)
 
-        @old_version_name = Timewizard::Utils::Wizardry.only_semver text_split[2]
+        @old_version_name = Timewizard::Utils::Wizardry.only_version text_split[2]
         @new_version_name = @old_version_name
 
         codes = [text_split[0], text_split[2]]
@@ -99,11 +99,11 @@ module Timewizard
 
       def change_version_name(parts, change_to = '-1')
         text = parts
-        version = Timewizard::Utils::Wizardry.only_semver text
+        version = Timewizard::Utils::Wizardry.only_version text
         if change_to.to_s == '-1'
           text = text.gsub(version, @new_version_name.to_s)
         else
-          @new_version_name = Timewizard::Utils::Wizardry.only_semver change_to
+          @new_version_name = Timewizard::Utils::Wizardry.only_version change_to
           text = text.gsub(version, @new_version_name.to_s)
         end
       end

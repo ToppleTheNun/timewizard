@@ -8,7 +8,7 @@ module Timewizard
         stringy.gsub(/\D/, '').to_i || 0
       end
 
-      def self.only_semver(stringy)
+      def self.only_version(stringy)
         SEMVER_REGEX.match(stringy).to_s
       end
 
