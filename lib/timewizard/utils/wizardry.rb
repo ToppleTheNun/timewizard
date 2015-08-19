@@ -2,7 +2,7 @@ module Timewizard
   module Utils
     module Wizardry
 
-      VERSION_REGEX = /^((\d+\.)?(\d+\.)?(\*|\d+))(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/
+      VERSION_REGEX = /((\d+\.)?(\d+\.)?(\*|\d+))(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/
 
       def self.to_i(stringy)
         stringy.gsub(/\D/, '').to_i || 0
