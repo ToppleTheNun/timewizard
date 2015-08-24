@@ -1,3 +1,7 @@
+# It's time-y wime-y and wibbly wobbley. Abracadabra.
+# @author Richard Harrah
 module Timewizard
-  VERSION = "0.2.3"
+  # Version of this gem.
+  # @return [String] current version
+  VERSION = "0.3.0"
 end

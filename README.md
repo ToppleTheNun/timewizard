@@ -1,10 +1,11 @@
 # Timewizard
 
-[![Code Climate](https://codeclimate.com/github/Nunnery/timewizard/badges/gpa.svg)](https://codeclimate.com/github/Nunnery/timewizard)
-[![Test Coverage](https://codeclimate.com/github/Nunnery/timewizard/badges/coverage.svg)](https://codeclimate.com/github/Nunnery/timewizard/coverage)
-[![Build Status](https://travis-ci.org/Nunnery/timewizard.svg?branch=master)](https://travis-ci.org/Nunnery/timewizard)
-[![Dependency Status](https://gemnasium.com/Nunnery/timewizard.svg)](https://gemnasium.com/Nunnery/timewizard)
-[![Gem Version](https://badge.fury.io/rb/timewizard.svg)](http://badge.fury.io/rb/timewizard)
+[![Code Climate](https://img.shields.io/codeclimate/github/Nunnery/timewizard.svg?style=flat-square)](https://codeclimate.com/github/Nunnery/timewizard)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/Nunnery/timewizard.svg?style=flat-square)](https://codeclimate.com/github/Nunnery/timewizard/coverage)
+[![Build Status](https://img.shields.io/travis/Nunnery/timewizard.svg?style=flat-square)](https://travis-ci.org/Nunnery/timewizard)
+[![Dependency Status](https://img.shields.io/gemnasium/Nunnery/timewizard.svg?style=flat-square)](https://gemnasium.com/Nunnery/timewizard)
+[![Gem Version](https://img.shields.io/gem/v/timewizard.svg?style=flat-square)](https://rubygems.org/gems/timewizard)
+[![Docs Coverage](http://inch-ci.org/github/Nunnery/timewizard.svg?branch=master&style=flat-square)](http://inch-ci.org/github/Nunnery/timewizard)
 
 ## Installation
 
@@ -28,9 +29,7 @@ TODO: Write usage instructions here
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+TODO: Write development instructions here
 
 ## Contributing
 

@@ -1,29 +1,61 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'timewizard/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "timewizard"
-  spec.version       = Timewizard::VERSION
-  spec.version = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS'] && ENV['TRAVIS_BRANCH'] == 'development'
-  spec.authors       = ["Richard Harrah"]
-  spec.email         = ["topplethenunnery@gmail.com"]
+require 'yaml'
 
-  spec.summary       = %q{A gem for incrementing and decrementing iOS and Android app versions.}
-  spec.homepage      = "https://github.com/Nunnery/timewizard"
-  spec.license       = "MIT"
+Gem::Specification.new do |gem|
+  gemspec = YAML.load_file('gemspec.yml')
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  gem.name = gemspec.fetch('name')
+  gem.version = gemspec.fetch('version') do
+    lib_dir = File.join(File.dirname(__FILE__), 'lib')
+    $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "codeclimate-test-reporter", "~> 0.4"
-  spec.add_development_dependency "minitest", "~> 5.8"
+    require 'timewizard/version'
+    Timewizard::VERSION
+  end
+  gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if !ENV['TRAVIS_TAG'].nil? && ENV['TRAVIS_TAG'] == ''
 
-  spec.add_dependency "versionomy", "~> 0.4"
-  spec.add_dependency "xcodeproj", "~> 0.26"
+  gem.summary = gemspec['summary']
+  gem.description = gemspec['description']
+  gem.licenses = Array(gemspec['license'])
+  gem.authors = Array(gemspec['authors'])
+  gem.email = gemspec['email']
+  gem.homepage = gemspec['homepage']
+
+  glob = lambda { |patterns| gem.files & Dir[*patterns] }
+
+  gem.files = `git ls-files`.split($/)
+  gem.files = glob[gemspec['files']] if gemspec['files']
+
+  gem.executables = gemspec.fetch('executables') do
+    glob['bin/*'].map { |path| File.basename(path) }
+  end
+  gem.default_executable = gem.executables.first if Gem::VERSION < '1.7.'
+
+  gem.extensions = glob[gemspec['extensions'] || 'ext/**/extconf.rb']
+  gem.test_files = glob[gemspec['test_files'] || '{test/{**/}*_test.rb']
+  gem.extra_rdoc_files = glob[gemspec['extra_doc_files'] || '*.{txt,rdoc}']
+
+  gem.require_paths = Array(gemspec.fetch('require_paths') {
+                              %w[ext lib].select { |dir| File.directory?(dir) }
+                            })
+
+  gem.requirements = gemspec['requirements']
+  gem.required_ruby_version = gemspec['required_ruby_version']
+  gem.required_rubygems_version = gemspec['required_rubygems_version']
+  gem.post_install_message = gemspec['post_install_message']
+
+  split = lambda { |string| string.split(/,\s*/) }
+
+  if gemspec['dependencies']
+    gemspec['dependencies'].each do |name, versions|
+      gem.add_dependency(name, split[versions])
+    end
+  end
+
+  if gemspec['development_dependencies']
+    gemspec['development_dependencies'].each do |name, versions|
+      gem.add_development_dependency(name, split[versions])
+    end
+  end
 end

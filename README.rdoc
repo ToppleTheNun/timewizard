@@ -1,0 +1,30 @@
+= timewizard
+
+{<img src="https://img.shields.io/codeclimate/github/Nunnery/timewizard.svg?style=flat-square" alt="Code Climate" />}[https://codeclimate.com/github/Nunnery/timewizard]
+{<img src="https://img.shields.io/codeclimate/coverage/github/Nunnery/timewizard.svg?style=flat-square" alt="Code Coverage" />}[https://codeclimate.com/github/Nunnery/timewizard/coverage]
+{<img src="https://img.shields.io/travis/Nunnery/timewizard.svg?style=flat-square" alt="Build Status" />}[https://travis-ci.org/Nunnery/timewizard]
+{<img src="https://img.shields.io/gemnasium/Nunnery/timewizard.svg?style=flat-square" alt="Dependency Status" />}[https://gemnasium.com/Nunnery/timewizard]
+{<img src="https://img.shields.io/gem/v/timewizard.svg?style=flat-square" alt="RubyGems" />}[https://rubygems.org/gems/timewizard]
+{<img src="http://inch-ci.org/github/Nunnery/timewizard.svg?branch=master&style=flat-square" alt="Doc Coverage" />}[http://inch-ci.org/github/Nunnery/timewizard]
+
+== Description
+
+TODO: Description
+
+== Features
+
+== Examples
+
+  require 'timewizard'
+
+== Requirements
+
+== Install
+
+  $ gem install timewizard
+
+== Copyright
+
+Copyright (c) 2015 Richard Harrah
+
+See LICENSE.txt for details.

@@ -1,127 +1,96 @@
-require 'timewizard/utils/wizardry'
+require 'timewizard/versioner'
 
 module Timewizard
   module Versioner
-    class Android
-      attr_accessor :dir
-      attr_reader :manifest
-      attr_reader :old_version_code
-      attr_reader :old_version_name
-      attr_accessor :new_version_code
-      attr_accessor :new_version_name
+    # Represents the Android implementation of the versioner spec.
+    # @author Richard Harrah
+    # @since 0.1.0
+    class Android < Timewizard::Versioner::Base
 
-      def initialize(dir)
-        @dir = dir
-        @manifest = nil
+      #
+      # Public functions (inherited from parent)
+      #
+      public
+
+      def initialize(path_to_file)
+        super path_to_file
+        @file_contents = ''
       end
 
-      def update(change_to = '-1')
-        write_manifest(change_manifest(open_manifest, change_to))
-      end
+      #
+      # Private functions (implementation specific)
+      #
+      private
 
-      def find_manifest()
-        if File.directory?(@dir)
-          # check if the directory exists
-          unless Dir.exist?(@dir)
-            raise "directory passed in does not exist"
-          end
-          temp_file = nil
-          # check if the directory contains an AndroidManifest.xml
-          Dir.foreach(@dir.to_s) { |x|
-            if x == "AndroidManifest.xml"
-              temp_file = x
-            end }
-          if temp_file.nil?
-            raise "there is no AndroidManifest.xml in the given directory"
-          end
-          @manifest = File.expand_path(temp_file, @dir)
-        else
-          unless File.exist?(@dir)
-            raise "file passed in does not exist"
-          end
-          unless @dir == "AndroidManifest.xml"
-            raise "file must be an AndroidManifest.xml"
-          end
-          temp_file = File.absolute_path(@dir)
-          @manifest = temp_file
-        end
-      end
+      SPACE_REGEX = /\s+/
 
-      def open_manifest()
-        if @manifest.nil?
-          find_manifest
+      def read_file
+        if @file.nil?
+          raise 'file is nil and cannot be read'
         end
 
-        file_str = ''
+        @file_contents = ''
 
-        if File.exist?(@manifest)
-          file_str = File.open(@manifest, 'r+') { |file| file.read }
+        if File.exist?(@file)
+          @file_contents = File.open(@file, 'r+') { |f| f.read }
         end
 
-        file_str
+        @file_contents
       end
 
-      def find_version_code(container)
-        codes = find_version_code_and_name(container)
-        codes[0]
-      end
-
-      def find_version_name(container)
-        codes = find_version_code_and_name(container)
-        codes[1]
-      end
-
-      def find_version_code_and_name(container)
-        parts = container.match("android:versionCode=\"(.*)\"")
-
-        text = parts[0]
-        text_split = text.partition /\s+/
-
-        @old_version_code = Timewizard::Utils::Wizardry.to_i text_split[0]
-        @new_version_code = (@old_version_code + 1)
-
-        @old_version_name = Timewizard::Utils::Wizardry.only_version text_split[2]
-        @new_version_name = @old_version_name
-
-        codes = [text_split[0], text_split[2]]
-      end
-
-      def change_version_code(parts, change_to = '-1')
-        text = parts
-        version = Timewizard::Utils::Wizardry.to_i(text).to_s
-        if change_to.to_s == '-1'
-          text = text.gsub(version, @new_version_code.to_s)
-        else
-          @new_version_code = change_to.to_i
-          text = text.gsub(version, @new_version_code.to_s)
+      def write_file
+        if @file.nil?
+          raise 'file is nil and cannot be written'
         end
-      end
-
-      def change_version_name(parts, change_to = '-1')
-        text = parts
-        version = Timewizard::Utils::Wizardry.only_version text
-        if change_to.to_s == '-1'
-          text = text.gsub(version, @new_version_name.to_s)
-        else
-          @new_version_name = Timewizard::Utils::Wizardry.only_version change_to
-          text = text.gsub(version, @new_version_name.to_s)
+        if @file_contents.nil?
+          raise 'file_contents is null and cannot be written'
         end
+        File.open(@file, 'w') { |file| file.write(@file_contents) }
       end
 
-      def change_manifest(container, version_code_change = '-1', version_name_change = '-1')
-        version_code = find_version_code(container)
-        changed_code = change_version_code(version_code, version_code_change)
-        version_name = find_version_name(container)
-        changed_name = change_version_name(version_name, version_name_change)
-        container = container.gsub(version_code, changed_code).gsub(version_name, changed_name)
-      end
-
-      def write_manifest(container)
-        if @manifest.nil?
-          find_manifest
+      def find_build_and_version_numbers
+        if @file_contents.nil?
+          read_file
         end
-        File.open(@manifest, 'w') { |file| file.write(container) }
+        matched = @file_contents.match "android:versionCode=\"(.*)\""
+
+        first_match = matched[0]
+        split_match = first_match.partition(SPACE_REGEX)
+
+        build_num = Timewizard::Utils::Wizardry.only_version split_match[0]
+        version_num = Timewizard::Utils::Wizardry.only_version split_match[2]
+
+        parsed_build_num = Versionomy.parse(build_num, Versionomy::Format.get('rubygems'))
+        parsed_version_num = Versionomy.parse(version_num, Versionomy::Format.get('rubygems'))
+
+        obn = parsed_build_num.unparse
+        ovn = parsed_version_num.unparse
+        nbn = parsed_build_num.bump(parsed_build_num.parts.length - 1).unparse
+        nvn = ovn
+
+        [obn, ovn, nbn, nvn]
       end
+
+      def change_build_numbers
+        if @file_contents.nil?
+          read_file
+        end
+        if @new_build_number.nil?
+          read_build_numbers
+        end
+        @file_contents.gsub!(@old_build_number.to_s, @new_build_number.to_s)
+      end
+
+      def change_version_numbers
+        if @file_contents.nil?
+          read_file
+        end
+        if @new_version_number.nil?
+          read_version_numbers
+        end
+        @file_contents.gsub!(@old_version_number.to_s, @new_version_number.to_s)
+      end
+
     end
   end
 end
