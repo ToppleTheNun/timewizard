@@ -27,15 +27,6 @@ deploy:
     secure: iUqr4kxkxh5jioaDBjdf2Peu543U8dpaP9bAbkLQ5Lc26hYck8VfqTHzVAveLYsaipsgO7vwTTAKizbAj3eZqnASmb9v+A+Ejgrj6XPnPLpXzRAZsAqx5Qf+zCgiA5gRkI7g653HF160nXje08NpWeXKRpyYZj+oxIEUeGr31SHlffHvMBOVchB9UWl1dfiS2mYLdrFCpBlCgvppO0+Mr3OI8JLfLe3bpA3uES/poFyKFBUbYJZF1p1Hmr1lmIM3vaU6W4rzYWjFzfTxs/LgM6GlhQOgohhsvwD6T+cDNunXGze3V4EzwVtIe5VrzepLaH7DXLaO0PKgv+calXseDeAGTz5nE5eFh+GqKEtYl/FeBz+35m1cDIFYUF7p1uPGM+R+sQmPnUFlu6tFXLrwfDkS/Rorjtl0p922DpZqJnGWDJW1YLFt/OGR5zZ0SY01n/1EkCLyd4K6xVyGU/ErUGgmjmljQyjXd4G/FxFm+ULtCYyS0W0o63wX5EHEU0ftO24H1rM8Vb2ajKRZbF9zy7QnMscnDJRnOsgWUq0IbXecQVxK25wegwA31r/k1ImtKPfeKs92LoQkFZgsi3lh4qJGx2vdqQHnJaQkcZ5ZFuPR4u1tFWnmoFRjNB8eCdiHHrKNLm/zFB6m//C+ebeTpuUf+CoYV1SeWzEBnsiK74c=
   gem: timewizard
   on:
-    branch: master
-    repo: Nunnery/timewizard
-    ruby: 2.1.3
-- provider: rubygems
-  api_key:
-    secure: iUqr4kxkxh5jioaDBjdf2Peu543U8dpaP9bAbkLQ5Lc26hYck8VfqTHzVAveLYsaipsgO7vwTTAKizbAj3eZqnASmb9v+A+Ejgrj6XPnPLpXzRAZsAqx5Qf+zCgiA5gRkI7g653HF160nXje08NpWeXKRpyYZj+oxIEUeGr31SHlffHvMBOVchB9UWl1dfiS2mYLdrFCpBlCgvppO0+Mr3OI8JLfLe3bpA3uES/poFyKFBUbYJZF1p1Hmr1lmIM3vaU6W4rzYWjFzfTxs/LgM6GlhQOgohhsvwD6T+cDNunXGze3V4EzwVtIe5VrzepLaH7DXLaO0PKgv+calXseDeAGTz5nE5eFh+GqKEtYl/FeBz+35m1cDIFYUF7p1uPGM+R+sQmPnUFlu6tFXLrwfDkS/Rorjtl0p922DpZqJnGWDJW1YLFt/OGR5zZ0SY01n/1EkCLyd4K6xVyGU/ErUGgmjmljQyjXd4G/FxFm+ULtCYyS0W0o63wX5EHEU0ftO24H1rM8Vb2ajKRZbF9zy7QnMscnDJRnOsgWUq0IbXecQVxK25wegwA31r/k1ImtKPfeKs92LoQkFZgsi3lh4qJGx2vdqQHnJaQkcZ5ZFuPR4u1tFWnmoFRjNB8eCdiHHrKNLm/zFB6m//C+ebeTpuUf+CoYV1SeWzEBnsiK74c=
-  gem: timewizard
-  on:
-    branch: development
     repo: Nunnery/timewizard
     ruby: 2.1.3
 env:
