@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
     require 'timewizard/version'
     Timewizard::VERSION
   end
-  gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if !ENV['TRAVIS_TAG'].nil? && ENV['TRAVIS_TAG'] == ''
+  gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if !ENV['TRAVIS_BRANCH'].nil? && ENV['TRAVIS_BRANCH'] == 'master'
 
   gem.summary = gemspec['summary']
   gem.description = gemspec['description']
