@@ -1,61 +1,34 @@
 # coding: utf-8
 
-require 'yaml'
-
 Gem::Specification.new do |gem|
-  gemspec = YAML.load_file('gemspec.yml')
-
-  gem.name = gemspec.fetch('name')
-  gem.version = gemspec.fetch('version') do
-    lib_dir = File.join(File.dirname(__FILE__), 'lib')
-    $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
-
-    require 'timewizard/version'
-    Timewizard::VERSION
-  end
+  gem.name = 'timewizard'
+  lib_dir = File.join(File.dirname(__FILE__), 'lib')
+  $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
+  require 'timewizard/version'
+  gem.version = Timewizard::VERSION
   gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if !ENV['TRAVIS_BRANCH'].nil? && ENV['TRAVIS_BRANCH'] == 'master'
 
-  gem.summary = gemspec['summary']
-  gem.description = gemspec['description']
-  gem.licenses = Array(gemspec['license'])
-  gem.authors = Array(gemspec['authors'])
-  gem.email = gemspec['email']
-  gem.homepage = gemspec['homepage']
+  gem.summary = 'A Ruby library for parsing and changing iOS and Android version numbers.'
+  gem.description = 'Uses the RubyGems style of versioning in order to ease updates.'
+  gem.licenses = ['MIT']
+  gem.authors = ['Richard Harrah']
+  gem.email = 'topplethenunnery@gmail.com'
+  gem.homepage = 'https://nunnery.github.io/timewizard'
 
   glob = lambda { |patterns| gem.files & Dir[*patterns] }
 
   gem.files = `git ls-files`.split($/)
-  gem.files = glob[gemspec['files']] if gemspec['files']
 
-  gem.executables = gemspec.fetch('executables') do
-    glob['bin/*'].map { |path| File.basename(path) }
-  end
-  gem.default_executable = gem.executables.first if Gem::VERSION < '1.7.'
+  gem.test_files = glob['{spec/{**/}*_spec.rb']
+  gem.extra_rdoc_files = glob['*.{txt,rdoc}']
 
-  gem.extensions = glob[gemspec['extensions'] || 'ext/**/extconf.rb']
-  gem.test_files = glob[gemspec['test_files'] || '{test/{**/}*_test.rb']
-  gem.extra_rdoc_files = glob[gemspec['extra_doc_files'] || '*.{txt,rdoc}']
+  gem.add_dependency 'versionomy', '~> 0.4'
+  gem.add_dependency 'CFPropertyList', '~> 2.3'
 
-  gem.require_paths = Array(gemspec.fetch('require_paths') {
-                              %w[ext lib].select { |dir| File.directory?(dir) }
-                            })
-
-  gem.requirements = gemspec['requirements']
-  gem.required_ruby_version = gemspec['required_ruby_version']
-  gem.required_rubygems_version = gemspec['required_rubygems_version']
-  gem.post_install_message = gemspec['post_install_message']
-
-  split = lambda { |string| string.split(/,\s*/) }
-
-  if gemspec['dependencies']
-    gemspec['dependencies'].each do |name, versions|
-      gem.add_dependency(name, split[versions])
-    end
-  end
-
-  if gemspec['development_dependencies']
-    gemspec['development_dependencies'].each do |name, versions|
-      gem.add_development_dependency(name, split[versions])
-    end
-  end
+  gem.add_development_dependency 'bundler', '~> 1.10'
+  gem.add_development_dependency 'rake', '~> 10.0'
+  gem.add_development_dependency 'rspec', '~> 3.3'
+  gem.add_development_dependency 'yard', '~> 0.8'
+  gem.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
+  gem.add_development_dependency 'abide', '0.0.3'
 end
