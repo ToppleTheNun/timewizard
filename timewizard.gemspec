@@ -1,10 +1,10 @@
 # coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'timewizard/version'
 
 Gem::Specification.new do |gem|
   gem.name = 'timewizard'
-  lib_dir = File.join(File.dirname(__FILE__), 'lib')
-  $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
-  require 'timewizard/version'
   gem.version = Timewizard::VERSION
   if ENV.fetch('TRAVIS_BRANCH', 'development') != 'master'
     gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}"
@@ -19,8 +19,10 @@ Gem::Specification.new do |gem|
 
   glob = lambda { |patterns| gem.files & Dir[*patterns] }
 
-  gem.files = `git ls-files`.split($/)
-
+  gem.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  gem.require_paths = ['lib']
+  gem.bindir        = 'exe'
+  gem.executables   = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.test_files = glob['{spec/{**/}*_spec.rb']
   gem.extra_rdoc_files = glob['*.{txt,rdoc}']
 
@@ -32,5 +34,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
+  gem.add_development_dependency 'gem-release', '~> 0.7'
   gem.add_development_dependency 'abide', '0.0.3'
 end
