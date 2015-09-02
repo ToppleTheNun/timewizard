@@ -34,6 +34,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
-  gem.add_development_dependency 'gem-release', '~> 0.7'
-  gem.add_development_dependency 'abide', '0.0.3'
+  gem.add_development_dependency 'fuubar', '~> 2.0'
 end
