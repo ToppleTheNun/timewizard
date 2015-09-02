@@ -5,19 +5,6 @@ rvm:
 - 2.1.3
 before_install:
 - gem install bundler -v 1.10.6
-- rm -rf /usr/local/Cellar /usr/local/.git && brew cleanup
-- ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-- brew update
-- brew tap gemnasium/gemnasium
-install:
-- brew install icu4c openssl libyaml gemnasium-toolbelt
-- bundle install --jobs=3 --retry=3
-script:
-- bundle exec rake spec
-- bundle exec rake yard
-- bundle exec rake abide
-after_deploy:
-- ruby ./scripts/gemnasium_update.rb
 addons:
   code_climate:
     repo_token: 3dadb0fa3dce6a25c5f684b84239182e45fabf0d45c64511f621863e4c89b3fb
@@ -27,7 +14,7 @@ deploy:
     secure: 4JE74zJmRqxovYHPwMNXD+M+6jB08bVoleE7yBUkjD1a8ghLxHBAeQ5hEqxnkaqcTN89ycL6F7G4PAQOG9kVUCUAhcew4o93l+Dz4zAALI9bDwqpyAtxQpKvaEvoYwbXwJGu4Ak7slhB552fMLf6+nmzjfZ39oX7bwvaVj3L24li4yYfA5AXTrXFJLd9ig5KHsnUICvZXNP3nz2+NWyF0anV6qh+icKmsa9lbv8STDqFjmtRglvdw2CUpMK6bNhK4CiYpDGSKCshTCHFRk839GnqLwy0hVuf9v3Wtd97gd7P2FmwRv78XdDL11Z2zHaGBuExRTbkA1bXs8TNLYZpHBLgFHdJhlFWRXbO2eXbmjB9q09xj7bUPDQupQzq94+mtZKjI1tv0blhAglkxTlNKLVJrdQGp79e0XA9KV66Q+L3V6FjGb+xxf/M9ReVrEsL6iNRsgOxvGIiONG3Qe17JQTTgvxXKQHK4yKro7fFNHqTN7EUdK8MN07fmcHCg6rzjryAvA4VB6yXzoi61GGnYUBLLDtiy7ydPtC9P/FkGbh9fGGqbpRMxuYDB59epBWYQ+eD6ThWu3umcwhPwEC938YEYYOGXsgtMDVuADyRu4mmdol9Cng7QLw4fewv0tWkgX59TLcphwD5V8VGLmUelXKgB/avD5vNc1dV3m/t6/I=
   gem: timewizard
   on:
-    all_branches: true
+    tags: true
     repo: Nunnery/timewizard
 env:
   global:
