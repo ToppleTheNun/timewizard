@@ -1,5 +1,7 @@
 # Timewizard
 
+[![Join the chat at https://gitter.im/Nunnery/timewizard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Nunnery/timewizard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Code Climate](https://img.shields.io/codeclimate/github/Nunnery/timewizard.svg?style=flat-square)](https://codeclimate.com/github/Nunnery/timewizard)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/Nunnery/timewizard.svg?style=flat-square)](https://codeclimate.com/github/Nunnery/timewizard/coverage)
 [![Build Status](https://img.shields.io/travis/Nunnery/timewizard.svg?style=flat-square)](https://travis-ci.org/Nunnery/timewizard)
