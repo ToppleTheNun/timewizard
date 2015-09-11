@@ -46,12 +46,6 @@ require 'yard'
 YARD::Rake::YardocTask.new
 task :doc => :yard
 
-task :abide => :build do
-  require 'abide'
-
-  Bundler.clean_exec 'lebascii'
-end
-
 require "bundler/gem_tasks"
 
 Rake::Task[:build].enhance [:clean]
