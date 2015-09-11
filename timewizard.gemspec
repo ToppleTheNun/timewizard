@@ -6,9 +6,6 @@ require 'timewizard/version'
 Gem::Specification.new do |gem|
   gem.name = 'timewizard'
   gem.version = Timewizard::VERSION
-  if ENV.fetch('TRAVIS_BRANCH', 'development') != 'master'
-    gem.version = "#{gem.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}"
-  end
 
   gem.summary = 'A Ruby library for parsing and changing iOS and Android version numbers.'
   gem.description = 'Uses the RubyGems style of versioning in order to ease updates.'
