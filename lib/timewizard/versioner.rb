@@ -26,6 +26,14 @@ module Timewizard
       # @return [String] version number currently contained in the parsed file
       attr_reader :old_version_number
 
+      # bumped build number from parsed file
+      # @return [String] bumped build number
+      attr_reader :bumped_build_number
+
+      # bumped version number from parsed file
+      # @return [String] bumped version number
+      attr_reader :bumped_version_number
+
       # build number to write to parsed file
       # @return [String] build number to write to the parsed file
       attr_accessor :new_build_number
@@ -44,6 +52,8 @@ module Timewizard
         @file = path_to_file
         @old_build_number = nil
         @old_version_number = nil
+        @bumped_build_number = nil
+        @bumped_version_number = nil
         @new_build_number = nil
         @new_version_number = nil
       end
