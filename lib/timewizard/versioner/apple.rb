@@ -60,6 +60,9 @@ module Timewizard
         parsed_build_num = Versionomy.parse(build_num, Versionomy::Format.get('rubygems'))
         parsed_version_num = Versionomy.parse(version_num, Versionomy::Format.get('rubygems'))
 
+        @bumped_build_number = parsed_build_num.bump(parsed_build_num.parts.length - 1)
+        @bumped_version_number = parsed_version_num.bump(parsed_version_num.parts.length - 1)
+
         obn = parsed_build_num.unparse
         ovn = parsed_version_num.unparse
         nbn = parsed_build_num.bump(parsed_build_num.parts.length - 1).unparse
