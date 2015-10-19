@@ -130,5 +130,6 @@ module Timewizard
 
     autoload :Android, 'timewizard/versioner/android'
     autoload :Apple, 'timewizard/versioner/apple'
+    autoload :Worklight, 'timewizard/versioner/worklight'
   end
 end

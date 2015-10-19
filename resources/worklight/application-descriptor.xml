@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Licensed Materials - Property of IBM
+			 5725-I43 (C) Copyright IBM Corp. 2006, 2013. All Rights Reserved.
+			 US Government Users Restricted Rights - Use, duplication or
+             disclosure restricted by GSA ADP Schedule Contract with IBM Corp. -->
+<!-- Attribute "id" must be identical to application folder name -->
+<application xmlns="http://www.worklight.com/application-descriptor" id="test" platformVersion="6.2.0.01.20150114-1718">
+  <displayName>test</displayName>
+  <description>test</description>
+  <author>
+    <name>test</name>
+    <email>application author's e-mail</email>
+    <homepage>test</homepage>
+    <copyright>Copyright 2015 test</copyright>
+  </author>
+  <mainFile>index.html</mainFile>
+  <features>
+    <JSONStore/>
+  </features>
+  <thumbnailImage>test</thumbnailImage>
+  <iphone bundleId="test.app" version="0.0.1">
+    <worklightSettings include="false"/>
+    <security>
+      <encryptWebResources enabled="false"/>
+      <testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3"/>
+    </security>
+  </iphone>
+  <android version="0.0.1">
+    <worklightSettings include="false"/>
+    <security>
+      <encryptWebResources enabled="false"/>
+      <testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3"/>
+      <publicSigningKey/>
+      <packageName>test.app</packageName>
+    </security>
+  </android>
+  <mobileWebApp cacheManifest="no-use"/>
+</application>
