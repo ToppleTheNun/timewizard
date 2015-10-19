@@ -46,6 +46,8 @@ require 'yard'
 YARD::Rake::YardocTask.new
 task :doc => :yard
 
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 Rake::Task[:build].enhance [:clean]
+
+require 'rgitflow'
