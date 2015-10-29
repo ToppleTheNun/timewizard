@@ -23,8 +23,9 @@ Gem::Specification.new do |gem|
   gem.test_files = glob['{spec/{**/}*_spec.rb']
   gem.extra_rdoc_files = glob['*.{txt,rdoc}']
 
-  gem.add_dependency 'versionomy', '~> 0.4'
   gem.add_dependency 'CFPropertyList', '~> 2.3'
+  gem.add_dependency 'nokogiri', '~> 1.6.6'
+  gem.add_dependency 'versionomy', '~> 0.4'
 
   gem.add_development_dependency 'bundler', '~> 1.10'
   gem.add_development_dependency 'rake', '~> 10.0'
