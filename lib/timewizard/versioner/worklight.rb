@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'timewizard/versioner'
 
 module Timewizard
@@ -29,10 +30,10 @@ module Timewizard
           raise 'file is nil and cannot be read'
         end
 
-        @file_contents = ''
+        @file_contents = Nokogiri.XML('')
 
         if File.exist?(@file)
-          @file_contents = File.open(@file, 'r+') { |f| f.read }
+          @file_contents = File.open(@file, 'r+') { |f| Nokogiri.XML(f) }
         end
 
         @file_contents
@@ -45,27 +46,30 @@ module Timewizard
         if @file_contents.nil?
           raise 'file_contents is null and cannot be written'
         end
-        File.open(@file, 'w') { |file| file.write(@file_contents) }
+        File.open(@file, 'w') { |f| @file_contents.write_xml_to(f) }
       end
 
       def find_build_and_version_numbers
         if @file_contents.nil?
           read_file
         end
-        matched = @file_contents.match "version=\"(.*)\">"
 
-        first_match = matched[0]
-        split_match = first_match.partition(SPACE_REGEX)
+        iphone = @file_contents.at_css('application iphone')
+        android = @file_contents.at_css('application android')
 
-        build_num = Timewizard::Utils::Wizardry.only_version split_match[0]
+        iphone_version_num = iphone['version']
+        android_version_num = android['version']
 
-        parsed_build_num = Versionomy.parse(build_num, Versionomy::Format.get('rubygems'))
+        parsed_iphone_num = Versionomy.parse(iphone_version_num, Versionomy::Format.get('rubygems'))
+        parsed_android_num = Versionomy.parse(android_version_num, Versionomy::Format.get('rubygems'))
 
-        @bumped_build_number = parsed_build_num.bump(parsed_build_num.parts.length - 1)
+        parsed_version_num = parsed_android_num > parsed_iphone_num ? parsed_android_num : parsed_iphone_num
 
-        obn = parsed_build_num.unparse
-        ovn = parsed_build_num.unparse
-        nbn = parsed_build_num.bump(parsed_build_num.parts.length - 1).unparse
+        @bumped_version_number = parsed_version_num.bump(parsed_version_num.parts.length - 1)
+
+        obn = parsed_version_num.unparse
+        ovn = parsed_version_num.unparse
+        nbn = parsed_version_num.bump(parsed_version_num.parts.length - 1).unparse
         nvn = ovn
 
         [obn, ovn, nbn, nvn]
@@ -78,7 +82,8 @@ module Timewizard
         if @new_build_number.nil?
           read_build_numbers
         end
-        @file_contents.gsub!(@old_build_number.to_s, @new_build_number.to_s)
+        # don't actually want to do anything for build numbers for worklight
+        nil
       end
 
       def change_version_numbers
@@ -88,7 +93,11 @@ module Timewizard
         if @new_version_number.nil?
           read_version_numbers
         end
-        @file_contents.gsub!(@old_version_number.to_s, @new_version_number.to_s)
+        iphone = @file_contents.at_css('application iphone')
+        android = @file_contents.at_css('application android')
+
+        iphone['version'] = @new_version_number.to_s
+        android['version'] = @new_version_number.to_s
       end
 
     end

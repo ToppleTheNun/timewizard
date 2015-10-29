@@ -117,13 +117,13 @@ RSpec.describe 'Timewizard::Versioner::Worklight' do
       expect(@versioner.new_build_number).to eq('0.0.2')
     end
 
-    it 'should change contents of parsed file' do
+    it 'should not change contents of parsed file' do
       expect(@versioner.old_build_number).to eq('0.0.1')
       expect(@versioner.new_build_number).to eq('0.0.2')
       @versioner.write_build_numbers
       @versioner.read_build_numbers
-      expect(@versioner.old_build_number).to eq('0.0.2')
-      expect(@versioner.new_build_number).to eq('0.0.3')
+      expect(@versioner.old_build_number).to eq('0.0.1')
+      expect(@versioner.new_build_number).to eq('0.0.2')
     end
   end
 
