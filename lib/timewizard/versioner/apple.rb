@@ -44,6 +44,7 @@ module Timewizard
         if @file_contents.nil?
           raise 'file_contents is nil and cannot be written'
         end
+        @file_contents.formatted = true
         @file_contents.save(@file)
       end
 
