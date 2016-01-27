@@ -25,7 +25,7 @@ RSpec.describe 'Timewizard::Versioner::Worklight' do
   end
 
   context '#file' do
-    it 'should be an AndroidManifest.xml' do
+    it 'should be an application-descriptor.xml' do
       expect(@versioner.file).to eq("#{Dir.pwd.to_s}/tmp/worklight/application-descriptor.xml")
     end
   end
