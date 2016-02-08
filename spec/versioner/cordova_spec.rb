@@ -1,6 +1,6 @@
-require 'timewizard/versioner/worklight'
+require 'timewizard/versioner/cordova'
 
-RSpec.describe 'Timewizard::Versioner::Worklight' do
+RSpec.describe 'Timewizard::Versioner::Cordova' do
 
   before(:example) do
     pwd = Dir.pwd.to_s
@@ -11,22 +11,22 @@ RSpec.describe 'Timewizard::Versioner::Worklight' do
     pwd = Dir.pwd.to_s
     FileUtils.cp_r("#{pwd}/resources/.", "#{pwd}/tmp")
 
-    @versioner = Timewizard::Versioner::Worklight.new "#{pwd}/tmp/worklight/application-descriptor.xml"
+    @versioner = Timewizard::Versioner::Cordova.new "#{pwd}/tmp/cordova/config.xml"
   end
 
   context '.new' do
     it 'should raise error if arg is nil' do
-      expect { Timewizard::Versioner::Worklight.new nil }.to raise_error("passed in file cannot be nil")
+      expect { Timewizard::Versioner::Cordova.new nil }.to raise_error('passed in file cannot be nil')
     end
 
     it 'should not raise error if arg is not nil' do
-      expect { Timewizard::Versioner::Worklight.new '' }.not_to raise_error
+      expect { Timewizard::Versioner::Cordova.new '' }.not_to raise_error
     end
   end
 
   context '#file' do
-    it 'should be an application-descriptor.xml' do
-      expect(@versioner.file).to eq("#{Dir.pwd.to_s}/tmp/worklight/application-descriptor.xml")
+    it 'should be a config.xml' do
+      expect(@versioner.file).to eq("#{Dir.pwd.to_s}/tmp/cordova/config.xml")
     end
   end
 
