@@ -3,5 +3,5 @@
 module Timewizard
   # Version of this gem.
   # @return [String] current version
-  VERSION = '0.3.9'
+  VERSION = '0.3.10'
 end

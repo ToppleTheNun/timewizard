@@ -49,5 +49,3 @@ task :doc => :yard
 require 'bundler/gem_tasks'
 
 Rake::Task[:build].enhance [:clean]
-
-require 'rgitflow'
