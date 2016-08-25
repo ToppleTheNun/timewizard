@@ -15,7 +15,7 @@ module Timewizard
       # @raise [ArgumentError] if stringy is null
       def self.only_version(stringy)
         if stringy.nil?
-          raise ArgumentError, "stringy cannot be null"
+          raise ArgumentError, 'stringy cannot be null'
         end
         VERSION_REGEX.match(stringy.to_s).to_s
       end
